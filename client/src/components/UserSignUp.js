@@ -2,8 +2,9 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 
-// CONVERT TO HOOK
-// ALSO NEED TO ADD LOGIC FOR CONFIRM PASSWORD
+/**
+ * Renders input form and handles creation of user in database
+ */
 export default class UserSignUp extends Component {
   
   state = {
@@ -18,6 +19,7 @@ export default class UserSignUp extends Component {
   change = (event) => {
     const name = event.target.name
     const value = event.target.value
+    
     const dict = {}
     dict[name] = value
 
@@ -33,10 +35,9 @@ export default class UserSignUp extends Component {
     if (password === confirmPassword){
       this.setState({errors: []}) 
     } else {
-      this.setState({errors: ['passwords must match']})
+      this.setState({errors: ['Passwords must match']})
       return 
     }
-    
   
     try {
       await axios.post('http://localhost:5000/api/users', { firstName, lastName, emailAddress, password })
@@ -52,6 +53,7 @@ export default class UserSignUp extends Component {
     event.preventDefault()
     this.props.history.push('/')
   }
+
   render() {
     const errors = this.state.errors.map((message, index) => {
       return <li key={index}>{message}</li>

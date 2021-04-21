@@ -26,7 +26,7 @@ function CourseDetail (props) {
     axios(`http://localhost:5000/api/courses/${id}`)
       .then((response) => {
         setDataState(response.data)
-        // Sets user so course owner displays on page
+        // Sets user so course owner can be displayed on page
         setUser(`${response.data.User.firstName} ${response.data.User.lastName}`)
       })
       .catch((error) => {
@@ -54,6 +54,7 @@ function CourseDetail (props) {
     <main>
       <div className='actions--bar'>
         <div className='wrap'>
+          {/* Displays update/delete course buttons if user is owner of course */}
           {
             authUser && dataState.User && authUser.data.emailAddress === dataState.User.emailAddress ?
               <>

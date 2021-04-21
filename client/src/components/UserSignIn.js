@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 
-// CONVERT TO HOOK
+/**
+ * Renders user sign in form and handles sign in
+ */
 export default class UserSignIn extends Component {
   state = {
     emailAddress: '',
@@ -44,11 +46,12 @@ export default class UserSignIn extends Component {
     })
   }
 
-  submit = (e) => {
-    e.preventDefault()
+  submit = (event) => {
+    event.preventDefault()
     const { context }  = this.props
     const { emailAddress, password } = this.state
 
+    // Calls signIn, passed in through context (function in Context.js)
     context.actions.signIn(emailAddress, password)
       .then((user) => {
         if (user === null) {
@@ -56,6 +59,7 @@ export default class UserSignIn extends Component {
             return { errors: [ 'Sign-in was unsuccessful' ] }
           })
         } else {
+          // Returns user to previous page, if applicable
           if (this.props.location.state) {
             this.props.history.push(this.props.location.state.from)
           } else {

@@ -3,6 +3,11 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 import Forbidden from './Forbidden'
 
+/**
+ * Gets and renders course
+ * Then handles input value changes/submit for updates to the course
+ * @param {*} props
+ */
 function UpdateCourse (props) {
   const { id } = useParams()
   const [dataState, setDataState] = useState([])
@@ -24,6 +29,8 @@ function UpdateCourse (props) {
       })
   }, [id, props.history])
 
+  // Ensures that only authenticated user can navigate to /update route
+  // (even if appended in url)
   const { context } = props
   const authUser = context.authenticatedUser
   if (authUser && dataState.User && authUser.data.emailAddress !== dataState.User.emailAddress) {
@@ -35,14 +42,11 @@ function UpdateCourse (props) {
   const change = (event) => {
     const name = event.target.name
     const value = event.target.value
-
-    setDataState({...dataState, [name]: value})
+    setDataState({ ...dataState, [name]: value })
   }
 
-  const submit = async (e) => {
-    e.preventDefault()
-    const { context } = props
-    const authUser = context.authenticatedUser
+  const submit = async (event) => {
+    event.preventDefault()
 
     const course = {
       id: dataState.id,
@@ -57,6 +61,7 @@ function UpdateCourse (props) {
       password: authUser.password
     }
 
+    // Calls updateCourse, passed in through context (function in Data.js)
     context.data.updateCourse(id, course, authCreds.emailAddress, authCreds.password)
       .then(() => {
         console.log('This course has been updated!')
@@ -69,8 +74,8 @@ function UpdateCourse (props) {
       })
   }
 
-  const cancel = (e) => {
-    e.preventDefault()
+  const cancel = (event) => {
+    event.preventDefault()
     props.history.push('/')
   }
 

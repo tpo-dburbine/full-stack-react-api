@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
-// CONVERT TO HOOK
+/**
+ * Renders course input form, and creates a new course on submit
+ */
 export default class CreateCourse extends Component {
   state = {
     courseTitle: '',
@@ -10,7 +12,6 @@ export default class CreateCourse extends Component {
     userId: '',
     errors: null
   }
-  
   
   render() {
     const {errors} = this.state
@@ -53,8 +54,8 @@ export default class CreateCourse extends Component {
   }
 
 
-  submit = async (e) => {
-    e.preventDefault()
+  submit = async (event) => {
+    event.preventDefault()
     const { context }  = this.props
     const {courseTitle, courseDescription, estimatedTime, materialsNeeded} = this.state
     const authUser = context.authenticatedUser
@@ -84,8 +85,8 @@ export default class CreateCourse extends Component {
       })       
     }
   
-  cancel = (e) => {
-    e.preventDefault()
+  cancel = (event) => {
+    event.preventDefault()
     this.props.history.push('/')
   }
 }

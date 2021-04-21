@@ -1,6 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+/**
+ * Takes in context and displays the authenticated user upon login
+ * @param {*} props
+ */
 const Header = (props) => {
   const { context } = props
   const authUser = context.authenticatedUser
