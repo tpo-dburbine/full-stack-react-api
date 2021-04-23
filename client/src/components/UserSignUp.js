@@ -61,6 +61,7 @@ export default class UserSignUp extends Component {
 
     return (
       <div className='form--centered'>
+      <h2>Sign Up</h2>
       <ul>{errors}</ul>
       <form onSubmit={this.submit}>
       <label htmlFor="firstName">First Name</label>

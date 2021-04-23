@@ -4,6 +4,7 @@ import React, { Component } from 'react'
  * Renders course input form, and creates a new course on submit
  */
 export default class CreateCourse extends Component {
+  
   state = {
     courseTitle: '',
     courseDescription: '',
@@ -12,9 +13,12 @@ export default class CreateCourse extends Component {
     userId: '',
     errors: null
   }
+
   
   render() {
     const {errors} = this.state
+    const { context }  = this.props
+    const authUser = context.authenticatedUser
 
     return (
       <div className="wrap">
@@ -25,6 +29,10 @@ export default class CreateCourse extends Component {
             <div>
               <label htmlFor="courseTitle">Course Title</label>
               <input id="courseTitle" name="courseTitle" ref={this.courseTitle} onChange={this.change} type="text" />
+
+              <label htmlFor="courseAuthor">Course Author</label>
+              <input id="courseAuthor" name="courseAuthor" type="text" readOnly value={`${authUser.data.firstName} ${authUser.data.lastName}`} />
+
               <label htmlFor="courseDescription">Course Description</label>
               <textarea id="courseDescription" name="courseDescription" ref={this.courseDescription} onChange={this.change}></textarea>
             </div>
@@ -59,6 +67,7 @@ export default class CreateCourse extends Component {
     const { context }  = this.props
     const {courseTitle, courseDescription, estimatedTime, materialsNeeded} = this.state
     const authUser = context.authenticatedUser
+    console.log(authUser)
 
     const course = {
       title: courseTitle,
